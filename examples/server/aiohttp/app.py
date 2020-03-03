@@ -4,7 +4,10 @@ from aiohttp import web
 
 import socketio
 
-sio = socketio.AsyncServer(async_mode='aiohttp')
+# When running behind a reverse proxy, cors_allowed_origins needs to be set to "*"
+# or to the actual origin, through which the server can be reached e.g. "https://exmaple.com"
+# If cors_allowed_origins is misconfigured, the connection will fail with error 400
+sio = socketio.AsyncServer(async_mode='aiohttp', cors_allowed_origins="*")
 app = web.Application()
 sio.attach(app)
 
